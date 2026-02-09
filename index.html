@@ -3,103 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elias Fister - Auditoría de Nueva Personalidad</title>
+    <title>Elias - El Camino de la Integridad</title>
     <style>
-        :root { --primary: #1a3a5a; --accent: #ffd700; --bg: #f4f7f9; --danger: #e74c3c; --success: #2ecc71; --card: #ffffff; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
-        .header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; border-bottom: 6px solid var(--accent); }
-        .container { max-width: 500px; margin: auto; padding-bottom: 100px; }
-        .card { background: var(--card); margin: 15px; border-radius: 18px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #eee; }
-        .card-title { font-weight: 800; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; margin-bottom: 15px; display: block; border-left: 5px solid var(--accent); padding-left: 12px; }
-        .btn { display: block; text-align: center; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; transition: 0.2s; }
-        .btn-jw { background: #e8f0fe; color: #1a73e8; border: 1px solid #c2d7fa; }
-        .btn-main { background: var(--primary); color: white; border: none; width: 100%; cursor: pointer; font-size: 1rem; }
-        .question-box { background: #f9f9f9; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
-        .question-box p { margin: 0 0 10px 0; font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
-        textarea { width: 100%; border: 1.5px solid #ddd; border-radius: 10px; padding: 12px; font-size: 0.9rem; box-sizing: border-box; font-family: inherit; resize: none; }
-        .check-item { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 0.85rem; font-weight: 500; }
-        .check-item input { width: 22px; height: 22px; margin-right: 12px; flex-shrink: 0; }
-        .status-msg { text-align: center; color: var(--success); font-weight: bold; padding: 10px; display: none; }
+        :root { --primary: #1a3a5a; --accent: #ffd700; --bg: #f0f2f5; --danger: #e74c3c; --success: #2ecc71; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
+        .header { background: var(--primary); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--accent); }
+        .score-board { display: flex; justify-content: space-around; background: #2c3e50; padding: 10px; font-weight: bold; font-size: 0.9rem; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        .step { display: none; background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: slideIn 0.3s ease-out; }
+        .step.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-choice { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: white; cursor: pointer; text-align: left; font-size: 1rem; transition: 0.2s; }
+        .btn-choice:hover { border-color: var(--primary); background: #f8f9fa; }
+        .correct { background: #e8f5e9 !important; border-color: var(--success) !important; color: #2e7d32; }
+        .wrong { background: #ffebee !important; border-color: var(--danger) !important; color: #c62828; }
+        .feedback { display: none; margin-top: 15px; font-size: 0.9rem; line-height: 1.4; padding: 10px; border-radius: 8px; }
+        .btn-next { background: var(--primary); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; margin-top: 20px; width: 100%; display: none; cursor: pointer; }
+        .link-jw { color: #1a73e8; text-decoration: underline; cursor: pointer; font-weight: bold; }
     </style>
 </head>
-<body onload="loadProgress()">
+<body onload="init()">
+
+<div class="header">
+    <h2 style="margin:0">DÍAS 1-2: DESAFÍO ABRAHAM</h2>
+    <div class="score-board">
+        <span>PUNTOS: <span id="pts">100</span></span>
+        <span>INTEGRIDAD: <span id="perc">100%</span></span>
+    </div>
+</div>
 
 <div class="container">
-    <div class="header">
-        <h1 style="margin:0; font-size: 1.5rem;">DÍAS 1 Y 2</h1>
-        <p style="margin:5px 0 0 0; opacity: 0.8; font-size: 0.8rem;">ABRAHAM: EL MODELO DE AMIGO</p>
+    <div id="step1" class="step active">
+        <h3>Paso 1: La Fuente de Verdad</h3>
+        <p>Para ganar este nivel, debes analizar el artículo correctamente. 404 corregido.</p>
+        <p><a href="https://www.jw.org/es/biblioteca/revistas/atalaya-estudio-febrero-2016/imitemos-a-los-amigos-%C3%ADntimos-de-jehov%C3%A1/" target="_blank" class="link-jw">📖 Leer Atalaya (w16.02)</a></p>
+        <p><strong>Pregunta:</strong> Según el estudio, ¿cuál fue el factor que hizo a Abraham "Amigo de Dios" sin tener leyes escritas?</p>
+        <button class="btn-choice" onclick="check(this, false, 'La ley escrita llegaría después.')">A. Su capacidad de seguir reglas estrictas.</button>
+        <button class="btn-choice" onclick="check(this, true, '¡Correcto! Su amistad se basaba en la confianza total en la personalidad de Jehová.')">B. Su confianza absoluta en la Persona de Jehová.</button>
+        <div class="feedback"></div>
+        <button class="btn-next" onclick="next(2)">Siguiente Desafío →</button>
     </div>
 
-    <div class="card">
-        <span class="card-title">Fuentes de Estudio</span>
-        <a href="https://www.jw.org/es/biblioteca/revistas/atalaya-estudio-febrero-2016/imitemos-a-los-amigos-%C3%ADntimos-de-jehov%C3%A1/" target="_blank" class="btn btn-jw">📖 Leer Atalaya (Link Corregido)</a>
-        <a href="https://www.jw.org/es/biblioteca/videos/siga-consejos-biblia/jehova-te-ayudara/" target="_blank" class="btn btn-jw">▶️ Video: "Jehová te ayudará"</a>
+    <div id="step2" class="step">
+        <h3>Paso 2: El Momento de Decisión</h3>
+        <p><a href="https://www.jw.org/es/biblioteca/videos/siga-consejos-biblia/jehova-te-ayudara/" target="_blank" class="link-jw">▶️ Ver Video: Jehová te ayudará</a></p>
+        <p><strong>Desafío de Integridad:</strong> En el video, la ayuda de Jehová aparece DESPUÉS de una acción. ¿Cuál es la lógica correcta para tu nueva personalidad?</p>
+        <button class="btn-choice" onclick="check(this, true, 'Exacto. Abraham salió de Ur sin saber a dónde iba. Tú debes dejar lo deshonesto antes de ver la recompensa.')">A. Primero tomo la decisión difícil, luego Jehová me apoya.</button>
+        <button class="btn-choice" onclick="check(this, false, 'Incorrecto. Eso es falta de fe. La confianza se demuestra actuando primero.')">B. Espero a que Jehová me dé una señal o dinero extra para dejar lo deshonesto.</button>
+        <div class="feedback"></div>
+        <button class="btn-next" onclick="next(3)">Siguiente Desafío →</button>
     </div>
 
-    <div class="card">
-        <span class="card-title">Simulador de Auditoría Crítica</span>
-        
-        <div class="question-box">
-            <p>1. ¿Por qué la amistad de Abraham no dependía de leyes escritas? ¿Qué implica eso para tu honestidad cuando el jefe no te mira?</p>
-            <textarea id="ans1" rows="3" placeholder="Analiza tu motivo real..."></textarea>
-        </div>
-
-        <div class="question-box">
-            <p>2. Abraham dejó su seguridad en Ur. ¿Qué ingreso o recurso "deshonesto" estás sacrificando hoy para ser Amigo de Jehová?</p>
-            <textarea id="ans2" rows="3" placeholder="Identifica tu Ur personal..."></textarea>
-        </div>
-
-        <div class="question-box">
-            <p>3. Basado en el video: ¿Cuál es el momento exacto donde sentiste miedo a perder algo y cómo lo superaste?</p>
-            <textarea id="ans3" rows="3" placeholder="Tu decisión bajo presión..."></textarea>
-        </div>
+    <div id="step3" class="step">
+        <h3>Paso 3: El Desguace Final</h3>
+        <p><strong>Situación:</strong> Tienes ingresos por copyright y usas recursos de la oficina. Esto es tu "Ur" personal.</p>
+        <p>Si quieres mantener el puntaje de Amigo de Jehová, ¿qué acción ejecutarás MAÑANA al entrar a la oficina?</p>
+        <button class="btn-choice" onclick="check(this, true, 'Puntaje Máximo. La integridad laboral es la base de la nueva personalidad.')">A. No usaré la fotocopiadora ni el tiempo de la empresa para mis negocios.</button>
+        <button class="btn-choice" onclick="check(this, false, 'Pérdida de puntos. Estás negociando tu lealtad por unos pesos.')">B. Seguiré usándolos un poco más hasta que me estabilice económicamente.</button>
+        <div class="feedback"></div>
+        <button class="btn-next" onclick="finish()">Finalizar Auditoría</button>
     </div>
 
-    <div class="card" style="border-top: 4px solid var(--danger);">
-        <span class="card-title">Auditoría de Integridad Relevante</span>
-        <div class="check-item">
-            <input type="checkbox" id="c1"> <span>Desguace Financiero: Eliminé fuentes de ingreso de copyright o deshonestas.</span>
-        </div>
-        <div class="check-item">
-            <input type="checkbox" id="c2"> <span>Integridad Laboral: No utilicé recursos de la empresa (tiempo/equipos) para fines privados.</span>
-        </div>
-        <div class="check-item">
-            <input type="checkbox" id="c3"> <span>Pureza Mental: Bloqueé toda tentación o contenido inapropiado hoy.</span>
-        </div>
-    </div>
-
-    <div id="status" class="status-msg">✓ AUDITORÍA GUARDADA EN DISPOSITIVO</div>
-    
-    <div style="padding: 0 15px;">
-        <button class="btn btn-main" onclick="saveData()">FINALIZAR Y GUARDAR EXAMEN</button>
+    <div id="result" class="step">
+        <h2 id="finalMsg"></h2>
+        <p>Tus puntos finales: <span id="finalPts"></span></p>
+        <button class="btn-main" onclick="location.reload()" style="background:var(--primary); color:white; padding:15px; border:none; border-radius:10px; width:100%">Reiniciar Entrenamiento</button>
     </div>
 </div>
 
 <script>
-    const KEY = 'elias_audit_1_2';
-    function saveData() {
-        const d = {
-            a1: document.getElementById('ans1').value,
-            a2: document.getElementById('ans2').value,
-            a3: document.getElementById('ans3').value,
-            c1: document.getElementById('c1').checked,
-            c2: document.getElementById('c2').checked,
-            c3: document.getElementById('c3').checked
-        };
-        localStorage.setItem(KEY, JSON.stringify(d));
-        document.getElementById('status').style.display = 'block';
-        setTimeout(() => { document.getElementById('status').style.display = 'none'; }, 3000);
+    let points = 100;
+    function init() {
+        document.getElementById('pts').innerText = points;
     }
-    function loadProgress() {
-        const s = JSON.parse(localStorage.getItem(KEY));
-        if (s) {
-            document.getElementById('ans1').value = s.a1 || '';
-            document.getElementById('ans2').value = s.a2 || '';
-            document.getElementById('ans3').value = s.a3 || '';
-            document.getElementById('c1').checked = s.c1 || false;
-            document.getElementById('c2').checked = s.c2 || false;
-            document.getElementById('c3').checked = s.c3 || false;
+
+    function check(btn, isCorrect, msg) {
+        const parent = btn.parentElement;
+        const feedback = parent.querySelector('.feedback');
+        const nextBtn = parent.querySelector('.btn-next');
+        const choices = parent.querySelectorAll('.btn-choice');
+
+        choices.forEach(c => c.disabled = true);
+
+        if(isCorrect) {
+            btn.classList.add('correct');
+            feedback.style.color = 'green';
+        } else {
+            btn.classList.add('wrong');
+            points -= 20;
+            document.getElementById('pts').innerText = points;
+            feedback.style.color = 'red';
         }
+
+        feedback.innerHTML = msg;
+        feedback.style.display = 'block';
+        nextBtn.style.display = 'block';
+        
+        document.getElementById('perc').innerText = points + "%";
+    }
+
+    function next(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        const nextStep = document.getElementById('step' + n);
+        if(nextStep) nextStep.classList.add('active');
+    }
+
+    function finish() {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('result').classList.add('active');
+        document.getElementById('finalPts').innerText = points;
+        document.getElementById('finalMsg').innerText = points >= 80 ? "¡Eres Amigo de Jehová!" : "Necesitas más estudio.";
     }
 </script>
 
